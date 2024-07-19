@@ -6,12 +6,10 @@ jobs:
    container_scanning_using_trivy:
      runs-on: ubuntu-latest
      steps:
-     - name: Checkout
-       uses: actions/checkout@v4.1.7
      - name: Build container image
        shell: pwsh
        run: ./build.ps1
-     - name: Install Trivy
+     - name: Install trivy
        shell: bash
        run: |
         sudo apt-get install wget apt-transport-https gnupg
@@ -19,5 +17,5 @@ jobs:
         echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
         sudo apt-get update
         sudo apt-get install trivy
-     - name: Install Trivy
-       run: trivy scan trivy --scanners vuln
+     - name: Scan container
+       run: trivy image trivy --scanners vuln
