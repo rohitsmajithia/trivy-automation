@@ -22,14 +22,7 @@ jobs:
         echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
         sudo apt-get update
         sudo apt-get install trivy
-     - id: trivy-cache  
-       name: Cache Trivy Database
-       uses: actions/cache@v4.0.2
-       with:
-         path: ${{ env.CACHE_DIR }}
-         key: anblickstrivy
      - name: Trivy Database Download
-       if: ${{ steps.trivy-cache.outputs.cache-hit == 'false' }}
        run: trivy image alpine --download-db-only --cache-dir ${{ env.CACHE_DIR }}
      - name: Scan container
-       run: trivy image trivy --scanners vuln --skip-db-update --cache-dir ${{ env.CACHE_DIR }}
+       run: trivy image trivy --scanners vuln
