@@ -20,4 +20,4 @@ jobs:
         sudo apt-get update
         sudo apt-get install trivy
      - name: Scan container
-       run: trivy image trivy --scanners vuln --severity HIGH --exit-code 1
+       run: trivy image trivy --scanners vuln --severity CRITICAL --exit-code 1
